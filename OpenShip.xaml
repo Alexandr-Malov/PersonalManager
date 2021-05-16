@@ -1,0 +1,21 @@
+﻿ <Window x:Class="PersonalManager.OpenShip"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PersonalManager"
+        mc:Ignorable="d"
+        Title="OpenShip" Height="450" Width="801.066" Loaded="Window_Loaded">
+    <Grid>
+        <DataGrid Name="ShipGrid" CanUserResizeColumns ="False" CanUserResizeRows ="False" AutoGenerateColumns="False" FontSize="14" FontFamily="Cooper Black" Margin="0,0,0.2,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path= OrderNumber,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Номер заказа" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path= OrderedQuantity,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Заказанное количество" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path= OrderAmount,UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="True"  Header="Сумма заказа" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path= Manufacturer,UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="True"  Header="Производитель" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path= Nomenclature,UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="True"  Header="Номенклатура" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path= PriceOneProduct,UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="True"  Header="Стоимость одного товара" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
