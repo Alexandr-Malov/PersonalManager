@@ -28,8 +28,8 @@ namespace PersonalManager
             {
                 MainMenu mainMenu = new MainMenu();
                 MainWindow mainWindow = new MainWindow();
-                mainWindow.Hide();
                 mainMenu.Show();
+                Application.Current.MainWindow.Close();
             }
         }
     }

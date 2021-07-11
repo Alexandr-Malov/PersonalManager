@@ -21,9 +21,9 @@ namespace PersonalManager
     /// </summary>
     public partial class OpenShip : Window
     {
-        private readonly string PATH = $"{Environment.CurrentDirectory}\\{IsValidData.User_Id}\\ShipList.json";
+        private static readonly string PATH = $"{Environment.CurrentDirectory}\\UsersDate\\{IsValidData.User_Id}\\ShipList.json";
         private BindingList<ShipModel> _shipData;
-        private FileDBService _filedbservice;
+        private FileDBService _filedbservice = new FileDBService(PATH);
         public OpenShip()
         {
             InitializeComponent();
@@ -42,19 +42,17 @@ namespace PersonalManager
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _filedbservice = new FileDBService(PATH);
             try
             {
                 _shipData = _filedbservice.LoadData<ShipModel>();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 Application.Current.Shutdown();
             }
             ShipGrid.ItemsSource = _shipData;
-            var SOB = new ListChangedEventHandler(OnListChanged);
-            _shipData.ListChanged += SOB;
+            _shipData.ListChanged += new ListChangedEventHandler(OnListChanged); ;
         }
     }
 }

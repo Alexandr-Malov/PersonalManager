@@ -42,8 +42,9 @@ namespace PersonalManager
                 NavigationCommands.BrowseBack.InputGestures.Remove(backKeyGesture);
             }
         }
-
-        private readonly string PATH = $"{Environment.CurrentDirectory}\\{IsValidData.User_Id}\\contacts.json";
+        //TODO:переделать систему сохранения информации
+        //TODO:поставить шифрование на сохраненные данные
+        private readonly string PATH = $"{Environment.CurrentDirectory}\\UsersDate\\{IsValidData.User_Id}\\contacts.json";
         private BindingList<ContactsModel> _contactData;
         private FileDBService _filedbservice;
 

@@ -16,9 +16,11 @@ namespace PersonalManager
     /// </summary>
     public partial class ToDoList : Page
     {
-        private readonly string PATH = $"{Environment.CurrentDirectory}\\{IsValidData.User_Id}\\todolist.json";
-        private BindingList<TodoModel> _todoData;
-        private FileDBService _filedbservice;
+        //TODO:переделать систему сохранения информации
+        //TODO:поставить шифрование на сохраненные данные
+        private readonly string PATH = $"{Environment.CurrentDirectory}\\UsersDate\\{IsValidData.User_Id}\\todolist.json";//путь сохранения
+        private BindingList<TodoModel> _todoData;//данные таблицы
+        private FileDBService _filedbservice;//класс для работы с данными таблицы
 
         public ToDoList()
         {
@@ -44,19 +46,19 @@ namespace PersonalManager
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            _filedbservice = new FileDBService(PATH);
+            _filedbservice = new FileDBService(PATH);//назначается путь загрузки и сохранения файла
             try
             {
-                _todoData =_filedbservice.LoadData<TodoModel>();
+                _todoData =_filedbservice.LoadData<TodoModel>();//происходит загрузка таблицы данных
             }
              catch (System.Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                Application.Current.Shutdown();
+                Application.Current.Shutdown();//при возникновении ошибки загрузки,приложение закрывается
             }
-            TodoGrid.ItemsSource = _todoData;
-            var SOB = new ListChangedEventHandler(OnListChanged);
-            _todoData.ListChanged += SOB;
+            TodoGrid.ItemsSource = _todoData;//происходит собственно заполнение таблицы загруженными данными
+            var SOB = new ListChangedEventHandler(OnListChanged);//создан метод
+            _todoData.ListChanged += SOB;//привязка метода к событию
 
 
         }
@@ -65,7 +67,7 @@ namespace PersonalManager
         {
             try
             {
-                _filedbservice.SaveData(_todoData);
+                _filedbservice.SaveData(_todoData);//происходит сохранение данных при изменении таблицы
             }
             catch (Exception ex)
             {

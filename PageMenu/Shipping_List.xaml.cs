@@ -22,9 +22,12 @@ namespace PersonalManager
     /// </summary>
     public partial class Shipping_List : Page
     {
-        private static readonly string PATH = $"{Environment.CurrentDirectory}\\{IsValidData.User_Id}\\ShipList.json";
+        //TODO:переделать систему сохранения информации
+        //TODO:поставить шифрование на сохраненные данные
+        private static readonly string PATH = $"{Environment.CurrentDirectory}\\UsersDate\\{IsValidData.User_Id}\\ShipList.json";
         private BindingList<ShipModel> _shipData;
         private FileDBService _filedbservice = new FileDBService(PATH);
+
         public Shipping_List()
         {
             InitializeComponent();
@@ -92,7 +95,7 @@ namespace PersonalManager
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             OpenShip openShip = new OpenShip();
-            openShip.Show();
+            openShip.ShowDialog();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -107,7 +110,6 @@ namespace PersonalManager
                 Application.Current.Shutdown();
             }
             ShipGrid.ItemsSource = _shipData;
-            var SOB = new ListChangedEventHandler(OnListChanged);
             _shipData.ListChanged += new ListChangedEventHandler(OnListChanged);
         }
     }

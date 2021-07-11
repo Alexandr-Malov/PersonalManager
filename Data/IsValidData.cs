@@ -152,7 +152,6 @@ namespace PersonalManager
             SqlCommand sql = new SqlCommand(sqlExpression, db.connection);
             if (sql.ExecuteScalar() != null)
             {
-                MessageBox.Show("Вы успешно вошли!", "Вход в приложение");
                 ReadFileFromDatabase();
                 db.Close();
                 return true;

@@ -21,7 +21,7 @@ namespace PersonalManager
     /// </summary>
     public partial class AddShip : Window
     {
-        private readonly string PATH = $"{Environment.CurrentDirectory}\\{IsValidData.User_Id}\\ShipList.json";
+        private readonly string PATH = $"{Environment.CurrentDirectory}\\UsersDate\\{IsValidData.User_Id}\\ShipList.json";
         private BindingList<ShipModel> _shipData;
         private FileDBService _filedbservice;
         public AddShip()

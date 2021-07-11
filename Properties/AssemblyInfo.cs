@@ -8,7 +8,7 @@ using System.Windows;
 // набор атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
 [assembly: AssemblyTitle("PersonalManager")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Персональный информационный менеджер")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PersonalManager")]

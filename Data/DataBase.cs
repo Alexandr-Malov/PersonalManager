@@ -17,14 +17,14 @@ namespace PersonalManager
         public SqlConnection connection = new SqlConnection(conStr);
         public void Open()
         {
-            if (connection.State == System.Data.ConnectionState.Closed)
+            if (connection.State == ConnectionState.Closed)
             {
                 connection.Open();
             }
         }
         public void Close()
         {
-            if (connection.State == System.Data.ConnectionState.Open)
+            if (connection.State == ConnectionState.Open)
             {
                 connection.Close();
             }
