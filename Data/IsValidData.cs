@@ -75,7 +75,7 @@ namespace PersonalManager
                                 var sqlid = new SqlCommand(sqlUserid, db.connection);
                                 User_Id = Convert.ToInt32(sqlid.ExecuteScalar());
                                 User_Id++;
-                                sqlExpression = $"INSERT INTO Users (User_Id,Login,Email,Password) VALUES (@id,@login,@email,@password)";
+                                sqlExpression = $"INSERT INTO Users ([User_Id],[Login],[First_Name],[Last_Name],[Age],[Phone Number],[Email],[Password]) VALUES (@id,@login,@firstname,@lastname,@age,@numberphone,@email,@password)";
                                 sql = new SqlCommand(sqlExpression, db.connection);
 
                                 SqlParameter id = new SqlParameter("@id", User_Id);
@@ -84,6 +84,22 @@ namespace PersonalManager
                                 SqlParameter loginParam = new SqlParameter("@login", Login);
 
                                 sql.Parameters.Add(loginParam);
+
+                                SqlParameter firstnameParam = new SqlParameter("@firstname", "unknown");
+
+                                sql.Parameters.Add(firstnameParam);
+
+                                SqlParameter lastnameParam = new SqlParameter("@lastname", "unknown");
+
+                                sql.Parameters.Add(lastnameParam);
+
+                                SqlParameter ageParam = new SqlParameter("@age", 10);
+
+                                sql.Parameters.Add(ageParam);
+
+                                SqlParameter numberphoneParam = new SqlParameter("@numberphone", "+79999999999");
+
+                                sql.Parameters.Add(numberphoneParam);
 
                                 SqlParameter emailParam = new SqlParameter("@email", Email);
 
@@ -102,7 +118,7 @@ namespace PersonalManager
                                 else
                                 {
                                     MessageBox.Show("Регистрация прошла успешно!", "Регистрация");
-                                    Directory.CreateDirectory($"{Environment.CurrentDirectory}\\{IsValidData.User_Id}");
+                                    Directory.CreateDirectory($"{Environment.CurrentDirectory}\\UsersDate\\{IsValidData.User_Id}");
                                     return true;
                                 }
                             }

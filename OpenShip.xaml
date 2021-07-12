@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalManager"
         mc:Ignorable="d"
-        Title="OpenShip" Height="450" Width="801.066" Loaded="Window_Loaded">
+        Title="OpenShip" Height="450" Width="1218.782" Loaded="Window_Loaded">
     <Grid>
-        <DataGrid Name="ShipGrid" CanUserResizeColumns ="False" CanUserResizeRows ="False" AutoGenerateColumns="False" FontSize="14" FontFamily="Cooper Black" Margin="0,0,0.2,0">
+        <DataGrid Name="ShipGrid" CanUserResizeColumns ="False" CanUserResizeRows ="False" AutoGenerateColumns="False" FontSize="14" FontFamily="Cooper Black" Margin="0,0,0.4,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path= OrderNumber,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Номер заказа" Width="*"/>
                 <DataGridTextColumn Binding="{Binding Path= OrderedQuantity,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Заказанное количество" Width="*"/>
