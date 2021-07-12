@@ -77,6 +77,7 @@ namespace PersonalManager
 
         private void TodoGrid_KeyDown(object sender, KeyEventArgs e)
         {
+            
             if (e.Key == Key.Back)
             {
                 int a = TodoGrid.SelectedIndex;
@@ -92,6 +93,7 @@ namespace PersonalManager
                 }
                 else
                 {
+                    _filedbservice.SaveData(_todoData);
                     _todoData.RemoveAt(a);
                 }
             }

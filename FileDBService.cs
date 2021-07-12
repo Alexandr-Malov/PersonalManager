@@ -41,62 +41,77 @@ namespace PersonalManager
             }
             else
             {
-                
-                var reader = File.OpenText(PATH);
-                var fileText = reader.ReadToEnd();
-                if (fileText == "")
+                using (var reader = File.OpenText(PATH)) 
                 {
-                    return new BindingList<T>();
-                }
-                else
-                {
-                    reader.Dispose();
-                    try
+                    var fileText = reader.ReadToEnd();
+                    if (fileText == "")
                     {
-                        using (FileStream fileStream = new FileStream(PATH, FileMode.Open))
+                        return new BindingList<T>();
+                    }
+                    else
+                    {
+                        reader.Dispose();
+                        try
                         {
-                            using (Aes aes = Aes.Create())
+                            using (FileStream fileStream = new FileStream(PATH, FileMode.Open))
                             {
-                                byte[] iv = new byte[aes.IV.Length];
-                                int numBytesToRead = aes.IV.Length;
-                                int numBytesRead = 0;
-                                while (numBytesToRead > 0)
+                                using (Aes aes = Aes.Create())
                                 {
-                                    int n = fileStream.Read(iv, numBytesRead, numBytesToRead);
-                                    if (n == 0) break;
+                                    byte[] iv = new byte[aes.IV.Length];
+                                    int numBytesToRead = aes.IV.Length;
+                                    int numBytesRead = 0;
+                                    while (numBytesToRead > 0)
+                                    {
+                                        int n = fileStream.Read(iv, numBytesRead, numBytesToRead);
+                                        if (n == 0) break;
 
-                                    numBytesRead += n;
-                                    numBytesToRead -= n;
-                                }
+                                        numBytesRead += n;
+                                        numBytesToRead -= n;
+                                    }
 
-                                byte[] key =
-                                {
+                                    byte[] key =
+                                    {
                                        0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
                                        0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16
                                     };
 
-                                using (CryptoStream cryptoStream = new CryptoStream(
-                                   fileStream,
-                                   aes.CreateDecryptor(key, iv),
-                                   CryptoStreamMode.Read))
-                                {
-                                    using (StreamReader decryptReader = new StreamReader(cryptoStream))
+                                    using (CryptoStream cryptoStream = new CryptoStream(
+                                       fileStream,
+                                       aes.CreateDecryptor(key, iv),
+                                       CryptoStreamMode.Read))
                                     {
-                                        string decryptedMessage = decryptReader.ReadToEnd();
-                                        return JsonConvert.DeserializeObject<BindingList<T>>(decryptedMessage);
+                                        using (StreamReader decryptReader = new StreamReader(cryptoStream))
+                                        {
+                                            string decryptedMessage = decryptReader.ReadToEnd();
+                                            return JsonConvert.DeserializeObject<BindingList<T>>(decryptedMessage);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("" + ex);
-                        return null;
-                    }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("" + ex);
+                            return null;
+                        }
+                    } 
                 }
             }
-            
+
+
+
+
+            //var fileExists = File.Exists(PATH);
+            //if (!fileExists)
+            //{
+            //    File.CreateText(PATH).Dispose();
+            //    return new BindingList<T>();
+            //}
+            //using (var reader = File.OpenText(PATH))
+            //{
+            //    var fileText = reader.ReadToEnd();
+            //    return JsonConvert.DeserializeObject<BindingList<T>>(fileText);
+            //}
         }
 
             
@@ -116,10 +131,12 @@ namespace PersonalManager
         /// </param>
         public virtual void SaveData(object Data)//сохраняет таблицу
         {
+
+
             var output = JsonConvert.SerializeObject(Data);
             try
             {
-                using (FileStream fileStream = new FileStream(PATH, FileMode.OpenOrCreate))
+                using (FileStream filestream = new FileStream(PATH, FileMode.Create))
                 {
                     using (Aes aes = Aes.Create())
                     {
@@ -131,16 +148,16 @@ namespace PersonalManager
                         aes.Key = key;
 
                         byte[] iv = aes.IV;
-                        fileStream.Write(iv, 0, iv.Length);
+                        filestream.Write(iv, 0, iv.Length);
 
-                        using (CryptoStream cryptoStream = new CryptoStream(
-                            fileStream,
+                        using (CryptoStream cryptostream = new CryptoStream(
+                            filestream,
                             aes.CreateEncryptor(),
                             CryptoStreamMode.Write))
                         {
-                            using (StreamWriter encryptWriter = new StreamWriter(cryptoStream))
+                            using (StreamWriter encryptwriter = new StreamWriter(cryptostream))
                             {
-                                encryptWriter.WriteLine(output);
+                                encryptwriter.WriteLine(output);
                             }
                         }
                     }
@@ -148,8 +165,15 @@ namespace PersonalManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"The encryption failed.{ex}");
+                MessageBox.Show($"the encryption failed.{ex}");
             }
+
+
+            //using (StreamWriter writer = new StreamWriter(PATH))
+            //{
+            //    var output = JsonConvert.SerializeObject(Data);
+            //    writer.Write(output);
+            //}
         }
     }
 }
